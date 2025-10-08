@@ -1,0 +1,126 @@
+{
+  "info": {
+    "name": "Flight Deals MVP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"demo@example.com\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Upsert Prefs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"demo@example.com\", \"homeAirport\": \"LYS\", \"maxBudget\": 120, \"nonstopOnly\": true, \"regions\": [\"EU\"]}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/prefs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "prefs"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Deals",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/deals?limit=20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "deals"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "20"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin Fetch",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-ADMIN-TOKEN",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"origins\": [\"LYS\"]}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/admin/fetch",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "admin",
+            "fetch"
+          ]
+        }
+      }
+    }
+  ]
+}
