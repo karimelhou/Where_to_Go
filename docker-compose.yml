@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_NAME:-deals}
+      POSTGRES_USER: ${DB_USER:-deals}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-deals}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-deals} -d ${DB_NAME:-deals}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DB_HOST: postgres
+    ports:
+      - "${APP_PORT:-8080}:8080"
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    profiles: ["mail"]
+
+volumes:
+  postgres_data:
