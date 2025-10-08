@@ -35,14 +35,12 @@ public class AdminController {
         }
         int fetched = 0;
         int stored = 0;
-        int validated = 0;
         for (String origin : request.origins()) {
             FetchService.FetchResult result = fetchService.fetchOrigin(origin, request.nonstopOnlyFlag(), request.maxBudget());
             fetched += result.fetched();
-            validated += result.validated();
             stored += result.stored();
         }
-        return ResponseEntity.ok(new FetchResponse(fetched, validated, stored));
+        return ResponseEntity.ok(new FetchResponse(fetched, stored));
     }
 
     public record FetchRequest(@NotEmpty List<@Size(min = 3, max = 3) String> origins,
@@ -53,6 +51,6 @@ public class AdminController {
         }
     }
 
-    public record FetchResponse(int fetched, int validated, int stored) {
+    public record FetchResponse(int fetched, int stored) {
     }
 }

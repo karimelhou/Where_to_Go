@@ -44,6 +44,7 @@ public class AppProperties {
         private double errorDiscount;
         private double errorPricePerKm;
         private double minScore;
+        private double ultraLowLongHaul;
 
         public double getDealDiscount() {
             return dealDiscount;
@@ -75,6 +76,14 @@ public class AppProperties {
 
         public void setMinScore(double minScore) {
             this.minScore = minScore;
+        }
+
+        public double getUltraLowLongHaul() {
+            return ultraLowLongHaul;
+        }
+
+        public void setUltraLowLongHaul(double ultraLowLongHaul) {
+            this.ultraLowLongHaul = ultraLowLongHaul;
         }
     }
 

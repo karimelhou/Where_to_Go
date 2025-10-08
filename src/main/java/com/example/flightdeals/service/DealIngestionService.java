@@ -54,7 +54,6 @@ public class DealIngestionService {
         deal.setFoundAt(Instant.now());
         deal.setRawPayload(candidate.getRawPayload());
         deal.setPricePerKm(Double.isNaN(evaluation.getPricePerKm()) ? null : evaluation.getPricePerKm());
-        deal.setValidatedByAmadeus(candidate.isValidatedByAmadeus());
         Deal saved = dealRepository.save(deal);
         dealDetector.recordSample(candidate);
         return Optional.of(saved);

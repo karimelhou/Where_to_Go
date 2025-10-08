@@ -18,8 +18,8 @@ import java.util.UUID;
 public class Deal {
 
     public enum Source {
-        TRAVELPAYOUTS,
-        AMADEUS
+        KIWI,
+        TRAVELPAYOUTS
     }
 
     @Id
@@ -68,9 +68,6 @@ public class Deal {
 
     @Column(name = "price_per_km")
     private Double pricePerKm;
-
-    @Column(name = "validated_by_amadeus", nullable = false)
-    private boolean validatedByAmadeus;
 
     public UUID getId() {
         return id;
@@ -190,13 +187,5 @@ public class Deal {
 
     public void setPricePerKm(Double pricePerKm) {
         this.pricePerKm = pricePerKm;
-    }
-
-    public boolean isValidatedByAmadeus() {
-        return validatedByAmadeus;
-    }
-
-    public void setValidatedByAmadeus(boolean validatedByAmadeus) {
-        this.validatedByAmadeus = validatedByAmadeus;
     }
 }

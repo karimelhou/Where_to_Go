@@ -26,11 +26,10 @@ class DealRepositoryTest {
         deal.setPrice(BigDecimal.valueOf(90));
         deal.setCurrency("EUR");
         deal.setDepartAt(Instant.now());
-        deal.setSource(Deal.Source.TRAVELPAYOUTS);
+        deal.setSource(Deal.Source.KIWI);
         deal.setErrorFare(false);
         deal.setScore(65);
         deal.setFoundAt(Instant.now());
-        deal.setValidatedByAmadeus(false);
         Deal saved = dealRepository.save(deal);
         assertThat(saved.getId()).isNotNull();
     }

@@ -31,6 +31,7 @@ class DealDetectorTest {
         properties.getThresholds().setMinScore(60);
         properties.getThresholds().setErrorDiscount(0.3);
         properties.getThresholds().setErrorPricePerKm(0.015);
+        properties.getThresholds().setUltraLowLongHaul(120);
         dealDetector = new DealDetector(priceSampleRepository, airportService, properties);
     }
 
@@ -44,7 +45,7 @@ class DealDetectorTest {
         DealCandidate candidate = new DealCandidate();
         candidate.setOrigin("LYS");
         candidate.setDestination("LIS");
-        candidate.setPrice(BigDecimal.valueOf(50));
+        candidate.setPrice(BigDecimal.valueOf(80));
         candidate.setCurrency("EUR");
         candidate.setDepartAt(Instant.now().plusSeconds(86400));
         candidate.setNonstop(true);
