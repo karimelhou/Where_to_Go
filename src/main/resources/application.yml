@@ -1,0 +1,59 @@
+server:
+  port: ${APP_PORT:8080}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: flight-deals
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:deals}
+    username: ${DB_USER:deals}
+    password: ${DB_PASSWORD:deals}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  cache:
+    type: caffeine
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+
+integrations:
+  kiwi:
+    base-url: ${KIWI_BASE_URL:https://api.tequila.kiwi.com}
+    api-key: ${KIWI_API_KEY:demo}
+  travelpayouts:
+    base-url: ${TRAVELPAYOUTS_BASE_URL:https://api.travelpayouts.com}
+    token: ${TRAVELPAYOUTS_TOKEN:demo}
+
+app:
+  scheduler:
+    cron: ${CRON_FETCH:0 0 */6 * * *}
+  thresholds:
+    deal-discount: ${DEAL_DISCOUNT_THRESHOLD:0.7}
+    error-discount: ${ERROR_DISCOUNT_THRESHOLD:0.3}
+    error-price-per-km: ${ERROR_PRICE_PER_KM:0.015}
+    min-score: ${MIN_SCORE:60}
+    ultra-low-long-haul: ${ERROR_ULTRA_LOW_LONG_HAUL:120}
+  fetch:
+    search-lookahead-days: ${SEARCH_LOOKAHEAD_DAYS:90}
+    monitored-origins: ${MONITORED_ORIGINS:LYS,CDG}
+  admin:
+    token: ${ADMIN_TOKEN:dev-token}
