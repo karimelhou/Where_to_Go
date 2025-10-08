@@ -32,10 +32,11 @@ public class SeedController {
         deal.setDepartAt(Instant.now().plusSeconds(86400));
         deal.setReturnAt(Instant.now().plusSeconds(86400 * 5));
         deal.setDeepLink("https://example.com/deal");
-        deal.setSource(Deal.Source.KIWI);
+        deal.setSource(Deal.Source.TRAVELPAYOUTS);
         deal.setErrorFare(false);
         deal.setScore(75);
         deal.setFoundAt(Instant.now());
+        deal.setValidatedByAmadeus(false);
         dealRepository.save(deal);
         return ResponseEntity.ok().build();
     }

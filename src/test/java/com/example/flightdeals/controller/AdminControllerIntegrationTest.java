@@ -2,7 +2,7 @@ package com.example.flightdeals.controller;
 
 import com.example.flightdeals.domain.Deal;
 import com.example.flightdeals.dto.DealCandidate;
-import com.example.flightdeals.integrations.kiwi.KiwiClient;
+import com.example.flightdeals.integrations.amadeus.AmadeusClient;
 import com.example.flightdeals.integrations.travelpayouts.TravelpayoutsClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ class AdminControllerIntegrationTest {
     WebTestClient webTestClient;
 
     @MockBean
-    KiwiClient kiwiClient;
+    AmadeusClient amadeusClient;
 
     @MockBean
     TravelpayoutsClient travelpayoutsClient;
@@ -53,10 +53,11 @@ class AdminControllerIntegrationTest {
         candidate.setPrice(BigDecimal.valueOf(80));
         candidate.setCurrency("EUR");
         candidate.setDepartAt(Instant.now().plusSeconds(86400));
-        candidate.setSource(Deal.Source.KIWI);
+        candidate.setSource(Deal.Source.TRAVELPAYOUTS);
         candidate.setNonstop(true);
-        when(kiwiClient.search(anyString(), any(), any(), anyBoolean(), any())).thenReturn(List.of(candidate));
-        when(travelpayoutsClient.fetchRecentDeals(anyString())).thenReturn(List.of());
+        when(travelpayoutsClient.fetchRecentDeals(anyString())).thenReturn(List.of(candidate));
+        when(amadeusClient.validateOffer(any())).thenReturn(true);
+        when(amadeusClient.searchPopularDestinations(anyString())).thenReturn(List.of());
 
         webTestClient.post()
                 .uri("/api/v1/admin/fetch")

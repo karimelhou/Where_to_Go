@@ -16,6 +16,7 @@ public class DealCandidate {
     private Deal.Source source;
     private boolean nonstop;
     private String rawPayload;
+    private boolean validatedByAmadeus;
 
     public String getOrigin() {
         return origin;
@@ -95,5 +96,13 @@ public class DealCandidate {
 
     public void setRawPayload(String rawPayload) {
         this.rawPayload = rawPayload;
+    }
+
+    public boolean isValidatedByAmadeus() {
+        return validatedByAmadeus;
+    }
+
+    public void setValidatedByAmadeus(boolean validatedByAmadeus) {
+        this.validatedByAmadeus = validatedByAmadeus;
     }
 }

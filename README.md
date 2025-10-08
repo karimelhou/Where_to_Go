@@ -4,7 +4,7 @@ Production-ready MVP backend for European flight deals alerts built with Spring 
 
 ## Features
 - Persist users, alert preferences, deal history, and price samples.
-- Scheduled and on-demand ingestion from Kiwi Tequila and Travelpayouts APIs.
+- Scheduled and on-demand ingestion from Travelpayouts crowdsourced fares with live validation and enrichment via Amadeus, persisting a `validatedByAmadeus` flag per deal.
 - Deal scoring with historical baselines, distance-aware pricing, and error fare detection.
 - REST API for administration, browsing deals, managing users, and diagnostics.
 - Docker Compose stack with PostgreSQL and optional Mailhog.
@@ -34,6 +34,12 @@ Production-ready MVP backend for European flight deals alerts built with Spring 
      -H "Content-Type: application/json" \
      -d '{"origins":["LYS"]}'
    ```
+   The response reports how many deals were fetched, validated via Amadeus, and persisted.
+
+### External API credentials
+
+- **Travelpayouts**: create a free account at [travelpayouts.com](https://www.travelpayouts.com/) and generate an API token. Assign it to `TRAVELPAYOUTS_TOKEN` in your `.env` file.
+- **Amadeus**: register for a free test account at [developers.amadeus.com](https://developers.amadeus.com/), create an application, and copy the client ID/secret into `AMADEUS_CLIENT_ID` and `AMADEUS_CLIENT_SECRET`.
 
 ### Local development
 
@@ -63,7 +69,7 @@ Import the files under `postman/` for ready-to-use requests and environment vari
 
 ### Configuration keys
 
-See `.env.example` for all environment variables. Key runtime options include cron frequency (`CRON_FETCH`), monitored origins (`MONITORED_ORIGINS`), and detection thresholds.
+See `.env.example` for all environment variables. Key runtime options include cron frequency (`CRON_FETCH`), monitored origins (`MONITORED_ORIGINS`), detection thresholds, and admin access token.
 
 ## Testing
 

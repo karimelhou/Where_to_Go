@@ -36,22 +36,22 @@ management:
       show-details: when_authorized
 
 integrations:
-  kiwi:
-    base-url: ${KIWI_BASE_URL:https://api.tequila.kiwi.com}
-    api-key: ${KIWI_API_KEY:demo}
   travelpayouts:
     base-url: ${TRAVELPAYOUTS_BASE_URL:https://api.travelpayouts.com}
     token: ${TRAVELPAYOUTS_TOKEN:demo}
+  amadeus:
+    base-url: ${AMADEUS_BASE_URL:https://test.api.amadeus.com}
+    client-id: ${AMADEUS_CLIENT_ID:demo}
+    client-secret: ${AMADEUS_CLIENT_SECRET:demo}
 
 app:
   scheduler:
     cron: ${CRON_FETCH:0 0 */6 * * *}
   thresholds:
-    deal-discount: ${DEAL_DISCOUNT_THRESHOLD:0.7}
+    deal-discount: ${DEAL_DISCOUNT_THRESHOLD:0.8}
     error-discount: ${ERROR_DISCOUNT_THRESHOLD:0.3}
     error-price-per-km: ${ERROR_PRICE_PER_KM:0.015}
     min-score: ${MIN_SCORE:60}
-    ultra-low-long-haul: ${ERROR_ULTRA_LOW_LONG_HAUL:120}
   fetch:
     search-lookahead-days: ${SEARCH_LOOKAHEAD_DAYS:90}
     monitored-origins: ${MONITORED_ORIGINS:LYS,CDG}

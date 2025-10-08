@@ -17,35 +17,44 @@ class TravelpayoutsClientTest {
     @Test
     void parsesResponse() throws IOException {
         MockWebServer server = new MockWebServer();
-        String body = """
+        String latestBody = """
                 {
-                  "data": {
-                    "LIS": [
-                      {
-                        "price": 70,
-                        "currency": "EUR",
-                        "departDate": "2024-05-20T00:00:00",
-                        "returnDate": "2024-05-27T00:00:00",
-                        "transfers": 0,
-                        "link": "http://deal"
-                      }
-                    ]
-                  }
+                  "data": [
+                    {
+                      "origin": "LYS",
+                      "destination": "LIS",
+                      "price": 70,
+                      "currency": "EUR",
+                      "departure_at": "2024-05-20T00:00:00Z",
+                      "return_at": "2024-05-27T00:00:00Z",
+                      "transfers": 0,
+                      "link": "http://deal"
+                    }
+                  ]
+                }
+                """;
+        String specialsBody = """
+                {
+                  "data": []
                 }
                 """;
         server.enqueue(new MockResponse()
                 .setHeader("Content-Type", "application/json")
-                .setBody(body));
+                .setBody(latestBody));
+        server.enqueue(new MockResponse()
+                .setHeader("Content-Type", "application/json")
+                .setBody(specialsBody));
         server.start();
         try {
             WebClient client = WebClient.builder()
                     .baseUrl(server.url("/").toString())
-                    .defaultHeader("X-Access-Token", "test")
                     .build();
-            TravelpayoutsClient tpClient = new TravelpayoutsClient(client);
+            TravelpayoutsClient tpClient = new TravelpayoutsClient(client, "token");
             List<com.example.flightdeals.dto.DealCandidate> deals = tpClient.fetchRecentDeals("LYS");
             assertThat(deals).hasSize(1);
             assertThat(deals.get(0).getSource()).isEqualTo(Deal.Source.TRAVELPAYOUTS);
+            assertThat(deals.get(0).isNonstop()).isTrue();
+            assertThat(deals.get(0).getDepartAt()).isNotNull();
         } finally {
             server.shutdown();
         }

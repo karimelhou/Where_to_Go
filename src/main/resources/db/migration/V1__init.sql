@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS alert_preferences (
     regions TEXT
 );
 
-CREATE TYPE deal_source AS ENUM ('KIWI', 'TRAVELPAYOUTS');
+CREATE TYPE deal_source AS ENUM ('TRAVELPAYOUTS', 'AMADEUS');
 
 CREATE TABLE IF NOT EXISTS deals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS deals (
     found_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     expires_at TIMESTAMPTZ,
     raw_payload JSONB,
-    price_per_km NUMERIC(10,4)
+    price_per_km NUMERIC(10,4),
+    validated_by_amadeus BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE INDEX IF NOT EXISTS idx_deal_origin_destination_found_at

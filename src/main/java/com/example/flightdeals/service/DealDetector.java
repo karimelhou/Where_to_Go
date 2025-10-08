@@ -45,9 +45,7 @@ public class DealDetector {
 
         double score = baseScore * 0.5 + perKmScore + nonstopBonus + recencyBoost;
         boolean errorFare = discountRatio <= properties.getThresholds().getErrorDiscount()
-                || pricePerKm < properties.getThresholds().getErrorPricePerKm()
-                || (properties.getThresholds().getUltraLowLongHaul() > 0
-                && price < properties.getThresholds().getUltraLowLongHaul());
+                || pricePerKm < properties.getThresholds().getErrorPricePerKm();
 
         return new DealEvaluation(round(score), errorFare, discountRatio, pricePerKm);
     }

@@ -41,7 +41,7 @@ public class FetchScheduler {
                 .toList();
         for (String origin : origins) {
             FetchService.FetchResult result = fetchService.fetchOrigin(origin, true, null);
-            log.info("Scheduled fetch for {} fetched {} deals stored {}", origin, result.fetched(), result.stored());
+            log.info("Scheduled fetch for {} fetched {} deals (validated: {}, stored: {})", origin, result.fetched(), result.validated(), result.stored());
         }
     }
 }
